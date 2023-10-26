@@ -40,10 +40,6 @@
                             <td><input type="text" name="detail" value="<#if goal.detail??>${goal.detail}</#if>" /></td>
                         </tr>
                         <tr>
-                            <th>Target Date</th>
-                            <td><input type="date" name="target" value="<#if goal.target??>${goal.target}</#if><#if !goal.target??>2023-06-12</#if>" /></td>
-                        </tr>
-                        <tr>
                             <th>Status</th>
                             <td> <select id="status" name="status">
                                     <option value="pending">Pending</option>

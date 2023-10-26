@@ -28,8 +28,15 @@
                 </div>
 
                 <div id="collapseOne${goal.goalId}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                    <h5 class="mb-0">${goal.detail}</h5>
-                    <#list goal.tasks as task >
+                    <h5 class="mb-0">${goal.detail}</h5>    
+                    <h5 class="mb-0">Status: ${goal.status}</h5>    
+                     <#if goal.status=="pending">
+                     <a href="/goal/update-status/id=${goal.goalId}&status=in-progress" class="btn btn-secondary btn-sm float-right">Start Progress</a>
+                    </#if>
+                        <#if goal.status=="in-progress">
+                     <a href="/goal/update-status/id=${goal.goalId}&status=done" class="btn btn-secondary btn-sm float-right">Mark As Done</a>
+                    </#if>
+                     <#list goal.tasks as task >
                     <div class="card-body">
                         <a href="/task/id=${task.taskId}">${task.title}</a>
                     </div>

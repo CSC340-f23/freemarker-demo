@@ -1,6 +1,4 @@
-
 package com.csc340.freemarkerdemo.goal;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,15 +24,6 @@ public class GoalController {
     @Autowired
     private GoalService service;
 
-    @InitBinder
-    public void dateBinder(WebDataBinder binder) {
-        // 2023-04-19 02:14:25
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,
-                false));
-    }
-
     @GetMapping("/all")
     public String getGoal(Model model) {
         model.addAttribute("goalList", service.getAllGoals());
@@ -52,9 +41,9 @@ public class GoalController {
         service.deleteGoalById(goalId);
         return "redirect:/goal/all";
     }
-    
-       @GetMapping("/delete/eager/id={goalId}")
-    public String deleteGoalEager(@PathVariable long goalId, Model model) {        
+
+    @GetMapping("/delete/eager/id={goalId}")
+    public String deleteGoalEager(@PathVariable long goalId, Model model) {
         service.deleteGoalByIdEager(goalId);
         return "redirect:/goal/all";
     }
@@ -71,7 +60,15 @@ public class GoalController {
         existing.setTitle(goal.getTitle());
         existing.setDetail(goal.getDetail());
         existing.setStatus(goal.getStatus());
-        existing.setTarget(goal.getTarget());
+        service.saveGoal(existing);
+        return "redirect:/goal/all";
+    }
+
+    @GetMapping("/update-status/id={goalId}&status={status}")
+    public String upateGoalStatus(@PathVariable long goalId,
+            @PathVariable String status) {
+        Goal existing = service.getGoalById(goalId);
+        existing.setStatus(status);
         service.saveGoal(existing);
         return "redirect:/goal/all";
     }
